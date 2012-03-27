@@ -1,0 +1,4 @@
+dirt.png, grass.png and sand.png are modified versions of textures from http://www.johnsolo.net/tex/tex.php
+skydome.png is a modified version of http://www.cgskies.com/sky.php?sky=134&type=blueclear&hdronly=&sortby=rating&page=1&pagesize=
+speaker-icon.png is a modified version of http://en.mobile.wikipedia.org/wiki/File:Speaker_Icon.svg
+crate_normal.png and crate_diffuse.png are from http://www.filterforge.com/filters/9452.html
