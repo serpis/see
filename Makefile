@@ -4,8 +4,10 @@ SOURCES = $(wildcard $(SRCDIR)/*.cpp) $(wildcard $(SRCDIR)/*.c)
 OBJECTS = $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(addsuffix .o,$(basename $(SOURCES))))
 BINARY = see
 DEPFILE = dependencies.d
-COMMON_LFLAGS = -lglfw -Llibs/glfw-2.7.2/lib/x11 -lGLEW -lpnglite -lz -pg -lBulletDynamics -lBulletCollision -lLinearMath -lopenal `pkg-config --libs lua5.1`
-COMMON_CFLAGS = -D _USE_MATH_DEFINES=1 -I/usr/include/bullet `pkg-config --cflags lua5.1` -pg -Werror
+COMMON_LFLAGS = -lglfw -Llibs/glfw-2.7.2/lib/x11 -lGLEW -lz -pg -lBulletDynamics -lBulletCollision -lLinearMath -lopenal
+COMMON_CFLAGS = -D _USE_MATH_DEFINES=1 -I/usr/include/bullet -pg -Werror
+LINUX_LFLAGS = `pkg-config --libs lua5.1`
+LINUX_CFLAGS = `pkg-config --cflags lua5.1`
 
 .PHONY: default osx linux
 default:
@@ -17,7 +19,7 @@ osx:
 
 linux:
 	make -s depend
-	make $(BINARY) "LFLAGS = -lGL -lGLU -pg $(COMMON_LFLAGS)" "CFLAGS = $(COMMON_CFLAGS) -g -pg -DGL_GLEXT_PROTOTYPES" 
+	make $(BINARY) "LFLAGS = -lGL -lGLU -pg $(COMMON_LFLAGS) $(LINUX_LFLAGS)" "CFLAGS = $(COMMON_CFLAGS) $(LINUX_CFLAGS) -g -pg -DGL_GLEXT_PROTOTYPES" 
 
 docs:
 	doxygen doxconf
