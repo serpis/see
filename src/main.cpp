@@ -5,8 +5,14 @@
 #include <cstring>
 #include <cstdlib>
 
-#include <GL/gl.h> // for constants
+#include <GL/glew.h> // for constants
 #include <GL/glfw.h> // so that loading screen can be rendered
+
+#ifdef _OSX
+#include <OpenGL/gl.h> // for constants
+#else
+#include <GL/gl.h> // for constants
+#endif
 
 #include "engine.hpp"
 #include "renderl.hpp"

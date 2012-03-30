@@ -2,10 +2,13 @@
 #include <cstring>
 #include <cmath>
 
-#include <SDL.h>
-
+#ifdef _OSX
+#include <OpenAL/al.h>
+#include <OpenAL/alc.h>
+#else
 #include <AL/al.h>
 #include <AL/alc.h>
+#endif
 
 #include "audiol.hpp"
 

@@ -4,10 +4,11 @@ SOURCES = $(wildcard $(SRCDIR)/*.cpp) $(wildcard $(SRCDIR)/*.c)
 OBJECTS = $(patsubst $(SRCDIR)/%,$(OBJDIR)/%,$(addsuffix .o,$(basename $(SOURCES))))
 BINARY = see
 DEPFILE = dependencies.d
-COMMON_LFLAGS = -lglfw -Llibs/glfw-2.7.2/lib/x11 -lGLEW -lz -pg -lBulletDynamics -lBulletCollision -lLinearMath -lopenal
+COMMON_LFLAGS = -lglfw -lGLEW -pg -lBulletDynamics -lBulletCollision -lLinearMath
 COMMON_CFLAGS = -D _USE_MATH_DEFINES=1 -I/usr/include/bullet -pg -Werror
-LINUX_LFLAGS = `pkg-config --libs lua5.1`
+LINUX_LFLAGS = `pkg-config --libs lua5.1 -Llibs/glfw-2.7.2/lib/x11 -lopenal`
 LINUX_CFLAGS = `pkg-config --cflags lua5.1`
+CXX = g++-4.6
 
 .PHONY: default osx linux
 default:
@@ -15,7 +16,7 @@ default:
 
 osx:
 	make -s depend ARCH_DEFINES=-D_OSX
-	make $(BINARY) "LFLAGS = -framework OpenAL -framework OpenGL -L/opt/local/lib $(COMMON_LFLAGS)" "CFLAGS = $(COMMON_CFLAGS) -g -std=c++98 -D_OSX -Ilibs/Box2D/Box2D" 
+	make $(BINARY) "LFLAGS = -framework OpenAL -framework OpenGL -framework Carbon -framework Foundation -framework AppKit -llua $(COMMON_LFLAGS)" "CFLAGS = $(COMMON_CFLAGS) -g -D_OSX -I/usr/local/Cellar/bullet/2.79/include/bullet" 
 
 linux:
 	make -s depend

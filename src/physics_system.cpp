@@ -1,5 +1,10 @@
+#ifdef _OSX
+#include <bullet/btBulletDynamicsCommon.h>
+#include <bullet/BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+#else
 #include <btBulletDynamicsCommon.h>
 #include <BulletCollision/CollisionShapes/btHeightfieldTerrainShape.h>
+#endif
 
 #include "components.hpp"
 #include "physics_system.hpp"

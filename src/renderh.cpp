@@ -1,7 +1,11 @@
 #include <cmath>
 #include <cassert>
 
+#ifdef _OSX
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
+#endif
 
 #include "renderh.hpp"
 #include "resources.hpp"

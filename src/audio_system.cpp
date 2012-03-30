@@ -1,10 +1,14 @@
+#ifdef _OSX
+#include <OpenAL/al.h> // for alGetError
+#else
+#include <AL/al.h> // for alGetError
+#endif
+
 #include "audiol.hpp"
 #include "audio_system.hpp"
 #include "entity_system.hpp"
 #include "components.hpp"
 #include "renderh.hpp"
-
-#include <AL/al.h>
 
 audio_system_t::audio_system_t()
 {

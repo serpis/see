@@ -9,8 +9,13 @@
 
 #include <boost/algorithm/string.hpp>
 
+#ifdef _OSX
+#include <OpenAL/al.h> // for AL_FORMAT_STEREO16
+#include <OpenGL/gl.h>
+#else
 #include <AL/al.h> // for AL_FORMAT_STEREO16
 #include <GL/gl.h>
+#endif
 
 #include "material.hpp"
 #include "renderl.hpp"
@@ -729,7 +734,7 @@ renderm_material_t *resource_load_mtl_material(const char *filename)
     resource_load_material_library(filename, &materials);
     assert(materials.size() == 1);
     return create_material(materials[0]);
-}
+} 
 
 void resource_load_obj_models(const char *filename, vector<renderh_model_t> *models)
 {

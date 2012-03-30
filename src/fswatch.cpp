@@ -1,11 +1,53 @@
+#include <cassert>
+#include <cstring>
+
+// inserts '\0' at last '/', returns the string starting at this index + 1
+// result is a split of path into directory and filename
+static char *split_path(char *path)
+{
+    char *p = strrchr(path, '/');
+    assert(p);
+    *p = '\0';
+    return p + 1;
+}
+
+
+
+
+#ifdef _OSX
+
+#define MAX_WATCHES 100
+static struct watch_t
+{
+    int wd;
+    void *user_data;
+    void (*callback)(void *user_data);
+    char directory_path[256];
+    char *filename;
+} watches[MAX_WATCHES];
+static int watch_count = 0;
+
+void fswatch_init()
+{
+}
+
+void fswatch_add_modified_callback(const char *filename, void (*callback)(void *user_data), void *user_data)
+{
+}
+
+void fswatch_poll()
+{
+}
+
+
+#else
+
 #include <sys/inotify.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
 
 #include <cstdio>
-#include <cassert>
-#include <cstring>
 
 static int fd;
 
@@ -26,16 +68,6 @@ void fswatch_init()
     assert(fd != -1);
 
     assert(fcntl(fd, F_SETFL, fcntl(fd, F_GETFL) | O_NONBLOCK) == 0);
-}
-
-// inserts '\0' at last '/', returns the string starting at this index + 1
-// result is a split of path into directory and filename
-static char *split_path(char *path)
-{
-    char *p = strrchr(path, '/');
-    assert(p);
-    *p = '\0';
-    return p + 1;
 }
 
 void fswatch_add_modified_callback(const char *filename, void (*callback)(void *user_data), void *user_data)
@@ -82,4 +114,6 @@ void fswatch_poll()
     }
     assert(read_bytes == -1 && errno == EAGAIN);
 }
+
+#endif
 
