@@ -6,9 +6,8 @@ BINARY = see
 DEPFILE = dependencies.d
 COMMON_LFLAGS = -lglfw -lGLEW -pg -lBulletDynamics -lBulletCollision -lLinearMath
 COMMON_CFLAGS = -D _USE_MATH_DEFINES=1 -I/usr/include/bullet -pg -Werror
-LINUX_LFLAGS = `pkg-config --libs lua5.1 -Llibs/glfw-2.7.2/lib/x11 -lopenal`
+LINUX_LFLAGS = `pkg-config --libs lua5.1` -Llibs/glfw-2.7.2/lib/x11 -lopenal -Llibs/glfw-2.7.2/lib/x11
 LINUX_CFLAGS = `pkg-config --cflags lua5.1`
-CXX = g++-4.6
 
 .PHONY: default osx linux
 default:
